@@ -3,11 +3,16 @@
   "name": "lpt2sb",
   "description": "lpt v2",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "conv": "node src/convert.js",
+    "fetch": "node src/fetch.js"
   },
   "author": "jigsaw (http://jgs.me)",
   "license": "MIT",
   "dependencies": {
+    "@jigsaw/html2sb-compiler": "^1.0.5",
+    "gyazo-api": "^0.3.1",
+    "inquirer": "^3.1.0",
+    "request": "^2.81.0",
     "tumblr.js": "^1.1.1"
   }
 }
