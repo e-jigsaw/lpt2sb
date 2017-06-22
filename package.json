@@ -3,16 +3,20 @@
   "name": "lpt2sb",
   "description": "lpt v2",
   "scripts": {
-    "conv": "node src/convert.js",
-    "fetch": "node src/fetch.js"
+    "conv": "node src/cli/convert.js",
+    "cut": "node src/cli/cut.js",
+    "fetch": "node src/cli/fetch.js"
   },
   "author": "jigsaw (http://jgs.me)",
   "license": "MIT",
   "dependencies": {
     "@jigsaw/html2sb-compiler": "^1.0.5",
+    "electron": "^1.6.10",
+    "electron-config": "^1.0.0",
     "gyazo-api": "^0.3.1",
     "inquirer": "^3.1.0",
     "request": "^2.81.0",
-    "tumblr.js": "^1.1.1"
+    "tumblr.js": "^1.1.1",
+    "yo-yo": "^1.4.1"
   }
 }
