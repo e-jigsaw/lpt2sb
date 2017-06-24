@@ -39,7 +39,13 @@ app.on('ready', () => {
     queue = data.queue
     mainWindow.webContents.send('selected-file', '')
   })
-  const save = () => writeFileSync(filename, JSON.stringify({posts, queue}))
+  const save = () => {
+    writeFileSync(filename, JSON.stringify({posts, queue}))
+    mainWindow.webContents.send('metadata', {
+      posts: posts.length,
+      queue: queue.length
+    })
+  }
   const check = async () => {
     if (queue.length < 10) {
       const post = posts.shift()

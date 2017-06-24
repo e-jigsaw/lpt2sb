@@ -14,12 +14,21 @@
   }
 
   #navigator {
-    height: 5%;
+    height: 1.5rem;
     overflow: scroll;
   }
 
+  #navigator::-webkit-scrollbar {
+    display: none;
+  }
+
+  #navigator ul {
+    margin: 0;
+    padding: 0;
+  }
+
   #webviewContainer {
-    height: 95%;
+    height: calc(100% - 1.5rem);
   }
 
   #webview {
@@ -39,14 +48,16 @@
   const html = require('yo-yo')
   const fileOnClick = file => event => ipcRenderer.send('file-selected', file)
   const fileListView = files => html`
-    <ul>
-      ${files.map(file => html`
-        <li>
-          <button onclick=${fileOnClick(file)}>open</button>
-          ${file}
-        </li>
-      `)}
-    </ul>
+    <div>
+      <ul>
+        ${files.map(file => html`
+          <li>
+            <button onclick=${fileOnClick(file)}>open</button>
+            ${file}
+          </li>
+        `)}
+      </ul>
+    </div>
   `
   let el = fileListView([])
   const webview = document.getElementById('webview')
@@ -55,14 +66,20 @@
     el, fileListView(files)
   ))
   const nextOnClick = event => ipcRenderer.send('next', '')
-  const navigatorView = html`
-    <div>
-      <button onclick=${nextOnClick}>Next</button>
-    </div>
-  `
-  ipcRenderer.on('selected-file', () => {
-    html.update(el, navigatorView)
-  })
+  const navigatorView = metadata => {
+    const data = metadata || {
+      posts: 0,
+      queue: 0
+    }
+    const {posts, queue} = data
+    return html`
+      <div>
+        <button onclick=${nextOnClick}>Next</button>
+        <span>${queue} / ${posts}</span>
+      </div>
+    `
+  }
+  ipcRenderer.on('selected-file', () => html.update(el, navigatorView()))
   ipcRenderer.on('open', (event, url) => {
     webview.loadURL(url)
     webview.executeJavaScript(`
@@ -71,6 +88,9 @@
       document.head.appendChild(style)
     `)
   })
+  ipcRenderer.on('metadata', (event, data) => html.update(
+    el, navigatorView(data)
+  ))
   document.addEventListener('keydown', event => {
     if (event.metaKey && event.keyCode === 78) nextOnClick(event)
   })
