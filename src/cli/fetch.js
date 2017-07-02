@@ -1,8 +1,7 @@
-const tumblr = require('tumblr.js')
 const {promisify} = require('util')
 const {writeFileSync} = require('fs')
 const {resolve} = require('path')
-const {originalFilename} = require('./files.js')
+const tumblr = require('tumblr.js')
 
 const client = tumblr.createClient(require('../../.config.json'))
 const targetMonth = new Date().getMonth() - 1
