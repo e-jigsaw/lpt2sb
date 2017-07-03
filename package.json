@@ -3,6 +3,7 @@
   "name": "lpt2sb",
   "description": "lpt v2",
   "scripts": {
+    "app": "electron src/app/index.js",
     "conv": "node src/cli/convert.js",
     "cut": "node src/cli/cut.js",
     "fetch": "node src/cli/fetch.js"
