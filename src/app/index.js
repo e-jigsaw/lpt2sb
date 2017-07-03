@@ -30,7 +30,7 @@ app.on('ready', () => {
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.webContents.send('files', readdirSync(resolve(
       __dirname, '../../data'
-    )))
+    )).reverse())
   })
   ipcMain.on('file-selected', (event, file) => {
     filename = resolve(__dirname, `../../data/${file}`)
