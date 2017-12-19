@@ -80,14 +80,7 @@
     `
   }
   ipcRenderer.on('selected-file', () => html.update(el, navigatorView()))
-  ipcRenderer.on('open', (event, url) => {
-    webview.loadURL(url)
-    webview.executeJavaScript(`
-      const style = document.createElement('style')
-      style.innerText = '.line img { max-height: 80vh }'
-      document.head.appendChild(style)
-    `)
-  })
+  ipcRenderer.on('open', (event, url) => webview.loadURL(url))
   ipcRenderer.on('metadata', (event, data) => html.update(
     el, navigatorView(data)
   ))
